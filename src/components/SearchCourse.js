@@ -28,8 +28,6 @@ export default class SearchCourse extends Component {
       componentDidMount() {
         axios.get('/wp-json/wp/v2/posts')
         .then(res => {
-          console.log(res.data)
-          console.log(typeof(res.data))
           this.setState({ posts: res.data, loading: false });
         })
       }
