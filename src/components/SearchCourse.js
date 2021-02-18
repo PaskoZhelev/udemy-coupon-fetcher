@@ -26,7 +26,7 @@ export default class SearchCourse extends Component {
     }
 
       componentDidMount() {
-        axios.get('/cors-proxy/https://couponscorpion.com/wp-json/wp/v2/posts?per_page=80&_fields=title,modified,id,link&order=des')
+        axios.get('/wp-json/wp/v2/posts')
         .then(res => {
           console.log(res.data)
           console.log(typeof(res.data))
