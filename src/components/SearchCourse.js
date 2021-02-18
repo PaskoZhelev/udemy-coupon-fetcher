@@ -19,7 +19,6 @@ export default class SearchCourse extends Component {
      var doesContain = false;
       pattern.forEach(function(word){
         if(target.toLowerCase().includes(word)) {
-          console.log(word)
           doesContain = true;
         }
       });
@@ -29,8 +28,7 @@ export default class SearchCourse extends Component {
       componentDidMount() {
         axios.get('/wp-json/wp/v2/posts?per_page=80&_fields=title,modified,id,link&order=desc')
         .then(res => {
-          const posts = res.data;
-          this.setState({ posts, loading: false });
+          this.setState({ posts: res.data, loading: false });
         })
       }
 
