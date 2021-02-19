@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import CourseTable from './CourseTable';
-import ToggleButtonComponent from './ToggleButtonComponent'
+import { ToggleButtonComponent, TogglePageButtonComponent } from './ToggleButtonComponent'
 
 
 const Loader = () => (
@@ -16,22 +16,31 @@ export default class SearchCourse extends Component {
         posts1ButtonClicked: true,
         posts1: [],
         posts2: [],
+        page: 1
     }
 
-    handleButtonClicked = (val) => {
+    changeSourceButton = (val) => {
       const clicked = val == 1 ? true : false;
       this.setState({posts1ButtonClicked: clicked})
     }
 
+    changePageButton = (val) => {
+      this.setState({page: val})
+    }
+
+    fetchPosts = () => {
+      axios.all([
+        axios.get('/couponscorpion?per_page=100&_fields=title,modified,id,link&order=desc&page=' + this.state.page), 
+        axios.get('/onlinecourses?per_page=100&_fields=title,modified,id,link&order=desc&page=' + this.state.page)
+      ])
+      .then(axios.spread((obj1, obj2) => {
+        // Both requests are now complete
+        this.setState({ posts1: obj1.data, posts2: obj2.data, loading: false });
+      }));
+    }
+
       componentDidMount() {
-        axios.all([
-          axios.get('/couponscorpion?per_page=100&_fields=title,modified,id,link&order=desc'), 
-          axios.get('/onlinecourses?per_page=100&_fields=title,modified,id,link&order=desc')
-        ])
-        .then(axios.spread((obj1, obj2) => {
-          // Both requests are now complete
-          this.setState({ posts1: obj1.data, posts2: obj2.data, loading: false });
-        }));
+        this.fetchPosts();
       }
 
     render() {
@@ -39,7 +48,11 @@ export default class SearchCourse extends Component {
             <>
             <h2>100% OFF Udemy Courses</h2>
             <div style={{paddingLeft: 0.3 + 'em'}}>
-            <ToggleButtonComponent handleButtonClicked={this.handleButtonClicked}/>
+            <ToggleButtonComponent changeSourceButton={this.changeSourceButton}/>
+            </div>
+            <br/>
+            <div style={{paddingLeft: 0.3 + 'em'}}>
+            <TogglePageButtonComponent changePageButton={this.changePageButton} fetchPosts={this.fetchPosts}/>
             </div>
             <br/>
             { this.state.loading ? 
