@@ -25,8 +25,8 @@ export default class SearchCourse extends Component {
 
       componentDidMount() {
         axios.all([
-          axios.get('/couponscorpion'), 
-          axios.get('/onlinecourses')
+          axios.get('/couponscorpion?per_page=100&_fields=title,modified,id,link&order=desc'), 
+          axios.get('/onlinecourses?per_page=100&_fields=title,modified,id,link&order=desc')
         ])
         .then(axios.spread((obj1, obj2) => {
           // Both requests are now complete

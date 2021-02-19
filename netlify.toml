@@ -1,9 +1,9 @@
 [[redirects]]
   from = "/couponscorpion"
-  to = "https://couponscorpion.com/wp-json/wp/v2/posts?per_page=80&_fields=title,modified,id,link&order=desc"
+  to = "https://couponscorpion.com/wp-json/wp/v2/posts"
   status = 200
 
- [[redirects]] 
+ [[redirects]]
   from = "/onlinecourses"
-  to = "https://onlinetutorials.org/wp-json/wp/v2/posts?per_page=80&_fields=title,modified,id,link&order=desc"
+  to = "https://onlinetutorials.org/wp-json/wp/v2/posts"
   status = 200
