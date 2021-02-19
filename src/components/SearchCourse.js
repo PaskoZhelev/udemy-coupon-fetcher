@@ -13,7 +13,7 @@ const Loader = () => (
 export default class SearchCourse extends Component {
     state = {
         loading: true,
-        posts1ButtonClicked: false,
+        posts1ButtonClicked: true,
         posts1: [],
         posts2: [],
     }
