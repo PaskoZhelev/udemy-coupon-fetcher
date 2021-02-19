@@ -48,7 +48,7 @@ export default class SearchCourse extends Component {
                 <tr>
                   <td>{this.contains(post.title.rendered, this.state.pattern) ? <strong dangerouslySetInnerHTML={{__html: post.title.rendered}}></strong> : <span dangerouslySetInnerHTML={{__html: post.title.rendered}}/>}</td>
                   <td>{post.modified}</td>
-                  <td><strong><a href={post.link} target="_blank">Link</a></strong></td>
+                  <td><strong><a href={post.link} target="_blank" rel="noreferrer noopener">Link</a></strong></td>
               </tr>
               )}
             </table>
