@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import CourseTable from './CourseTable';
+import ToggleButtonComponent from './ToggleButtonComponent'
+
 
 const Loader = () => (
     <svg className="svgLoader" viewBox="0 0 100 100" width="5em" height="5em">
@@ -10,49 +13,42 @@ const Loader = () => (
 export default class SearchCourse extends Component {
     state = {
         loading: true,
-        posts: [],
-        pattern: ['java','python', 'aws', 'react', 'node', 'amazon', 'spring',
-         'unity', 'docker', 'kubernetes', 'devops', 'vue', 'database', 'rest', 'flutter']
+        posts1ButtonClicked: false,
+        posts1: [],
+        posts2: [],
     }
 
-   contains = (target, pattern) => {
-     var doesContain = false;
-      pattern.forEach(function(word){
-        if(target.toLowerCase().includes(word)) {
-          doesContain = true;
-        }
-      });
-      return doesContain;
+    handleButtonClicked = (val) => {
+      const clicked = val == 1 ? true : false;
+      this.setState({posts1ButtonClicked: clicked})
     }
 
       componentDidMount() {
-        axios.get('/wp-json/wp/v2/posts')
-        .then(res => {
-          this.setState({ posts: res.data, loading: false });
-        })
+        axios.all([
+          axios.get('/couponscorpion'), 
+          axios.get('/onlinecourses')
+        ])
+        .then(axios.spread((obj1, obj2) => {
+          // Both requests are now complete
+          this.setState({ posts1: obj1.data, posts2: obj2.data, loading: false });
+        }));
       }
 
     render() {
         return (
             <>
-            <h2>100% off Udemy Courses</h2>
-            <table>
-            <tr>
-              <th>Course Title</th>
-              <th>Date</th>
-              <th>Link</th>
-            </tr>
-              { this.state.loading ? 
+            <h2>100% OFF Udemy Courses</h2>
+            <div style={{paddingLeft: 0.3 + 'em'}}>
+            <ToggleButtonComponent handleButtonClicked={this.handleButtonClicked}/>
+            </div>
+            <br/>
+            { this.state.loading ? 
               <Loader /> :
-              this.state.posts.map(post => 
-                <tr>
-                  <td>{this.contains(post.title.rendered, this.state.pattern) ? <strong dangerouslySetInnerHTML={{__html: post.title.rendered}}></strong> : <span dangerouslySetInnerHTML={{__html: post.title.rendered}}/>}</td>
-                  <td>{post.modified}</td>
-                  <td><strong><a href={post.link} target="_blank" rel="noreferrer noopener">Link</a></strong></td>
-              </tr>
-              )}
-            </table>
+              this.state.posts1ButtonClicked ? <CourseTable posts={this.state.posts1}/> : <CourseTable posts={this.state.posts2}/>
+            }
             </>
         )
     }
 }
+
+
