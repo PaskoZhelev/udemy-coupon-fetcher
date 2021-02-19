@@ -59,7 +59,6 @@ function ToggleButtonComponent(props) {
               onChange={(e) => {
                 setRadioValue(e.currentTarget.value)
                 props.changePageButton(e.currentTarget.value)
-                props.fetchPosts()
               }}
             >
               {radio.name}

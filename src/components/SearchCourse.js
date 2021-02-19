@@ -26,12 +26,13 @@ export default class SearchCourse extends Component {
 
     changePageButton = (val) => {
       this.setState({page: val})
+      this.fetchPosts(val)
     }
 
-    fetchPosts = () => {
+    fetchPosts = (val) => {
       axios.all([
-        axios.get('/couponscorpion?per_page=100&_fields=title,modified,id,link&order=desc&page=' + this.state.page), 
-        axios.get('/onlinecourses?per_page=100&_fields=title,modified,id,link&order=desc&page=' + this.state.page)
+        axios.get('/couponscorpion?per_page=70&_fields=title,modified,id,link&order=desc&page=' + val), 
+        axios.get('/onlinecourses?per_page=70&_fields=title,modified,id,link&order=desc&page=' + val)
       ])
       .then(axios.spread((obj1, obj2) => {
         // Both requests are now complete
@@ -40,7 +41,7 @@ export default class SearchCourse extends Component {
     }
 
       componentDidMount() {
-        this.fetchPosts();
+        this.fetchPosts(this.state.page);
       }
 
     render() {
