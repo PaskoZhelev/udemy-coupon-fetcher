@@ -25,7 +25,7 @@ export default class SearchCourse extends Component {
     }
 
     changePageButton = (val) => {
-      this.setState({page: val})
+      this.setState({page: val, loading: true})
       this.fetchPosts(val)
     }
 
