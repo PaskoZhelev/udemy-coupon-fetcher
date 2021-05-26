@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Table } from 'react-bootstrap';
 
 export default class CourseTable extends Component {
-    pattern = ['java','python', 'aws', 'react', 'node', 'amazon', 'spring',
-    'unity', 'docker', 'kubernetes', 'devops', 'vue', 'database', 'rest', 'flutter']
+    pattern = ['java', 'aws', 'react', 'node', 'amazon', 'spring',
+    'unity', 'docker', 'kubernetes', 'devops', 'vue', 'database', 'rest', 
+    'flutter', 'microservice', 'crypto', 'azure', 'sql']
 
 
     contains = (target, pattern) => {
