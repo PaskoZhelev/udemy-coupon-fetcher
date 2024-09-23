@@ -9,7 +9,6 @@ export default class OnlineCourseScraper extends Component {
         .then(res => {
             const $ = cheerio.load(res.data);
             
-            var list = [];
             $('div[class="box-holder"]').find('div > div > div > .item-panel > .entry-title > a').each(function (index, element) {
                 //list.push($(element).attr('href'));
                 console.log($(element).attr('href'))
