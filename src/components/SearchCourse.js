@@ -20,7 +20,7 @@ export default class SearchCourse extends Component {
     }
 
     changeSourceButton = (val) => {
-      const clicked = val == 1 ? true : false;
+      const clicked = val === '1' ? true : false;
       this.setState({posts1ButtonClicked: clicked})
     }
 
